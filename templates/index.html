@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Accident Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="cockpit">
+      <header class="windshield">
+        <div>
+          <p class="eyebrow">Smart Accident Detection & Driver Monitoring</p>
+          <h1>Vehicle Safety Cockpit</h1>
+        </div>
+        <div class="warning-strip">
+          <span class="lamp seatbelt">SRS</span>
+          <span class="lamp abs">ABS</span>
+          <span class="lamp gps">GPS</span>
+          <span id="twilioBadge" class="lamp">Twilio check</span>
+          <span id="demoBadge" class="lamp">Demo mode</span>
+          <a class="header-jump" href="/service-bay">Service Bay</a>
+          <a class="header-jump" href="/garage-setup">Garage Setup</a>
+        </div>
+      </header>
+
+      <section class="cluster" id="overview">
+        <article class="dial status-dial">
+          <span class="dial-label">SYSTEM</span>
+          <div class="dial-ring">
+            <strong id="systemStatus">Monitoring Normal</strong>
+            <small id="sideMode">Monitoring</small>
+          </div>
+          <span id="modeDot" class="dot"></span>
+        </article>
+
+        <article class="center-console">
+          <div class="vehicle-silhouette">
+            <span class="sensor sensor-front"></span>
+            <span class="sensor sensor-left"></span>
+            <span class="sensor sensor-right"></span>
+            <span class="sensor sensor-rear"></span>
+            <span class="wheel wheel-front-left"></span>
+            <span class="wheel wheel-front-right"></span>
+            <span class="wheel wheel-rear-left"></span>
+            <span class="wheel wheel-rear-right"></span>
+            <div class="car-body">
+              <div class="car-cabin"></div>
+            </div>
+          </div>
+          <div class="console-readout">
+            <span>Active Timer</span>
+            <strong id="activeTimer">--:--</strong>
+            <p id="banner">System is monitoring continuously. No accident event is active.</p>
+          </div>
+        </article>
+
+        <article class="dial alert-dial">
+          <span class="dial-label">ALERT</span>
+          <div class="dial-ring">
+            <strong id="alarmState">Silent</strong>
+            <small id="dispatchState">Standby</small>
+          </div>
+        </article>
+      </section>
+
+      <section class="cockpit-grid">
+        <div class="left-dash">
+          <section class="panel telemetry">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Vehicle telemetry</p>
+                <h2>Accident Event Details</h2>
+              </div>
+              <span id="eventTime" class="pill subtle">--:--</span>
+            </div>
+            <div class="telemetry-grid">
+              <div>
+                <span>Vehicle Number</span>
+                <strong id="vehicleNumber">TN 01 AB 1234</strong>
+              </div>
+              <div>
+                <span>Location</span>
+                <strong id="locationText">Coimbatore Bypass</strong>
+              </div>
+              <div>
+                <span>Current Stage</span>
+                <strong id="currentStage">Continuous monitoring active</strong>
+              </div>
+              <div>
+                <span>Driver Response</span>
+                <strong id="driverResponse">Waiting for normal operation</strong>
+              </div>
+              <div>
+                <span>Recipients</span>
+                <strong id="recipientsSummary">No alerts sent yet</strong>
+              </div>
+              <div class="dispatch-tile">
+                <span>Emergency Dispatch</span>
+                <strong id="dispatchHeadline">Monitoring clear</strong>
+                <em id="dispatchSubline">Emergency alerts are on standby.</em>
+              </div>
+            </div>
+          </section>
+
+          <section class="status-rail">
+            <article>
+              <span>GPS Lock</span>
+              <strong>Active</strong>
+            </article>
+            <article>
+              <span>Sensor Health</span>
+              <strong>4/4 Online</strong>
+            </article>
+            <article>
+              <span>Alert Mode</span>
+              <strong id="railAlertMode">Demo Mode</strong>
+            </article>
+            <article>
+              <span>Last Event</span>
+              <strong id="railLastEvent">No event</strong>
+            </article>
+          </section>
+        </div>
+
+        <div class="right-dash">
+          <section class="panel controls">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Steering controls</p>
+                <h2>Emergency Console</h2>
+              </div>
+            </div>
+            <div class="control-wheel">
+              <button class="danger" data-action="simulate_accident">ACCIDENT</button>
+              <button class="success" data-action="driver_responded">DRIVER OK</button>
+              <button class="sms" data-action="send_sms_now">SMS</button>
+              <button class="warning" data-action="call_contacts_now">CALL</button>
+              <button class="cancel" data-action="cancel_false_alarm">CANCEL</button>
+              <button class="reset" data-action="reset">RESET</button>
+            </div>
+          </section>
+
+          <section id="workflow" class="panel workflow-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Emergency route</p>
+                <h2>Escalation Timeline</h2>
+              </div>
+            </div>
+            <div class="timeline" id="timeline">
+              <div data-step="normal"><b>1</b><span>Monitor</span></div>
+              <div data-step="driver_wait"><b>2</b><span>Driver</span></div>
+              <div data-step="message_dispatch"><b>3</b><span>SMS</span></div>
+              <div data-step="contact_wait"><b>4</b><span>Ack</span></div>
+              <div data-step="auto_calling"><b>5</b><span>Call</span></div>
+              <div data-step="completed"><b>6</b><span>Done</span></div>
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

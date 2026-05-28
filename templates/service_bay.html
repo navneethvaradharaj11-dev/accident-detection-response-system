@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Service Bay | Smart Accident Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="cockpit page-shell">
+      <header class="windshield">
+        <div>
+          <p class="eyebrow">Responder Dispatch & Black Box</p>
+          <h1>Service Bay</h1>
+        </div>
+        <div class="warning-strip">
+          <span class="lamp seatbelt">SRS</span>
+          <span class="lamp abs">ABS</span>
+          <span class="lamp gps">GPS</span>
+          <span id="twilioBadge" class="lamp">Twilio check</span>
+          <span id="demoBadge" class="lamp">Demo mode</span>
+          <a class="header-jump" href="/">Cockpit</a>
+          <a class="header-jump" href="/garage-setup">Garage Setup</a>
+        </div>
+      </header>
+
+      <section id="serviceBay" class="panel service-panel page-panel">
+        <div class="service-head">
+          <div>
+            <p class="eyebrow">Service bay</p>
+            <h2>Responder Dispatch & Black Box</h2>
+          </div>
+          <a class="mini-link" href="/">Back to Cockpit</a>
+        </div>
+        <div class="service-split">
+          <div id="contacts" class="service-pane contacts-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="eyebrow">Responder lane</p>
+                <h2>Contact Status</h2>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Number</th>
+                    <th>SMS</th>
+                    <th>Call</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="contactsBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="service-pane log-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="eyebrow">Black box</p>
+                <h2>Workflow Log</h2>
+              </div>
+            </div>
+            <div id="logList" class="logs"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="contactDialog">
+      <form method="dialog" id="contactForm">
+        <h3>Edit Contact</h3>
+        <input type="hidden" id="contactIndex">
+        <label>
+          Name
+          <input id="contactName" autocomplete="off">
+        </label>
+        <label>
+          Number
+          <input id="contactNumber" autocomplete="off">
+        </label>
+        <div class="dialog-actions">
+          <button value="cancel" type="button" id="closeDialog">Cancel</button>
+          <button value="default" type="submit">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

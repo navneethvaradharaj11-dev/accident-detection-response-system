@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Garage Setup | Smart Accident Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="cockpit page-shell">
+      <header class="windshield">
+        <div>
+          <p class="eyebrow">Vehicle Configuration</p>
+          <h1>Garage Setup</h1>
+        </div>
+        <div class="warning-strip">
+          <span class="lamp seatbelt">SRS</span>
+          <span class="lamp abs">ABS</span>
+          <span class="lamp gps">GPS</span>
+          <span id="twilioBadge" class="lamp">Twilio check</span>
+          <span id="demoBadge" class="lamp">Demo mode</span>
+          <a class="header-jump" href="/">Cockpit</a>
+          <a class="header-jump" href="/service-bay">Service Bay</a>
+        </div>
+      </header>
+
+      <section id="garageSetup" class="panel garage-panel page-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Garage setup</p>
+            <h2>Vehicle Settings</h2>
+          </div>
+          <a class="mini-link" href="/">Back to Cockpit</a>
+        </div>
+        <form id="settingsForm" class="form">
+          <label>
+            Vehicle number
+            <input id="vehicleInput" name="vehicle_number" autocomplete="off">
+          </label>
+          <label>
+            Location
+            <input id="locationInput" name="location_text" autocomplete="off">
+          </label>
+          <label class="toggle">
+            <input id="demoModeInput" type="checkbox">
+            <span>Use demo delivery mode</span>
+          </label>
+          <button type="submit">Save Settings</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
