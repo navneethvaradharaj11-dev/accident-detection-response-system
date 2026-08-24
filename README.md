@@ -1,23 +1,19 @@
-# Smart Accident Detection and Response System
+# Smart Accident Detection & Response System
 
-A Python-based accident detection and emergency response dashboard that demonstrates a complete escalation workflow: accident detection, alarm activation, driver response countdown, SMS notification, contact acknowledgement wait time, and automatic call escalation through Twilio.
+A compact Python-based demonstration of an end-to-end accident detection and emergency response workflow. The project provides both a browser dashboard and a Tkinter desktop interface to simulate accident events, trigger alarm and escalation timers, and demonstrate SMS/voice notification flows (Twilio integration optional).
 
-The project includes both a browser dashboard and a Tkinter desktop dashboard, so it can be demonstrated on almost any Windows, macOS, or Linux machine with Python installed.
+Live demo: https://accident-detection-response-system.vercel.app
 
-## Features
+Highlights
 
-- Real-time accident event simulation
-- 30-second driver response timer
-- Emergency SMS workflow
-- 15-second contact acknowledgement timer
-- Automatic call escalation when acknowledgement is missed
-- Editable vehicle, location, and emergency contact details
-- Contact-level SMS and call status tracking
-- Demo mode for safe presentations without sending real alerts
-- Twilio REST integration for real SMS and voice calls
-- Web dashboard plus Tkinter desktop interface
+- Lightweight, single-repo demo for presentations and testing
+- Browser-based dashboard plus Tkinter desktop UI
+- Simulated real-time accident events and timers
+- Configurable escalation: driver response → SMS → acknowledgement → automated voice calls
+- Twilio REST integration for real SMS and voice calls (optional)
+- Demo mode to safely demonstrate behavior without sending real messages
 
-## Project Structure
+Repository layout
 
 ```text
 .
@@ -31,72 +27,36 @@ The project includes both a browser dashboard and a Tkinter desktop dashboard, s
 │   ├── index.html              # Main dashboard page
 │   ├── garage_setup.html       # Setup view
 │   └── service_bay.html        # Service/diagnostics view
-├── requirements.txt
-└── .github/workflows/
-    └── ci.yml                  # GitHub Actions validation
+├── requirements.txt            # Python dependencies
+├── .env.example                # Example environment variables
+└── .github/workflows/ci.yml    # CI smoke tests (syntax + imports)
 ```
 
-## Requirements
+Requirements
 
-- Python 3.10 or newer
-- A Twilio account only if you want to send real SMS or place real calls
+- Python 3.10+
+- Optional: a Twilio account and credentials to send real SMS/voice calls
 
-Install the Python dependency:
+Install
 
-```powershell
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Live Demo (Vercel)
+Configuration
 
-Access the live cloud-hosted dashboard at:
-[https://accident-detection-response-system.vercel.app](https://accident-detection-response-system.vercel.app)
+1. Copy the example environment file and update values:
 
-## Quick Start
-
-Run the web dashboard locally:
-
-```powershell
-python web_dashboard.py
+```bash
+cp .env.example .env
+# or on Windows (PowerShell)
+# copy .env.example .env
 ```
 
-Open the dashboard in your browser:
+2. Edit `.env` and provide your Twilio credentials and phone numbers if you want to enable real notifications.
 
-```text
-http://127.0.0.1:8080
-```
-Or view online at [https://accident-detection-response-system.vercel.app](https://accident-detection-response-system.vercel.app)
-
-To prevent the app from opening a browser automatically:
-
-```powershell
-python web_dashboard.py --no-browser
-```
-
-To use a different port:
-
-```powershell
-python web_dashboard.py --port 8125
-```
-
-Run the Tkinter desktop dashboard:
-
-```powershell
-python accident_ui.py
-```
-
-## Notification Modes
-
-The dashboard starts in demo mode when Twilio credentials are missing. Demo mode is safe for presentations because it simulates SMS and call delivery without contacting Twilio.
-
-To enable real SMS and voice calls:
-
-1. Copy `.env.example` to `.env`.
-2. Fill in your Twilio credentials and phone numbers.
-3. Start the dashboard.
-4. Turn demo mode off from the dashboard settings.
-
-Example `.env` values:
+Example (.env)
 
 ```text
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -106,36 +66,61 @@ TWILIO_TO_NUMBER=+919876543210
 DASHBOARD_DEMO_MODE=true
 ```
 
-Keep `.env` private. It is intentionally ignored by git.
+Important: Do not commit `.env` or any real credentials into source control. This repository intentionally ignores `.env`.
 
-## How The Emergency Workflow Works
+Running the project
 
-1. The system enters normal monitoring mode.
-2. An accident event is triggered from the dashboard.
-3. The alarm activates and a 30-second driver response timer starts.
+Web dashboard (default host: http://127.0.0.1:8080):
+
+```bash
+python web_dashboard.py
+```
+
+Options:
+- Prevent automatic browser open: `python web_dashboard.py --no-browser`
+- Use a different port: `python web_dashboard.py --port 8125`
+
+Tkinter desktop dashboard:
+
+```bash
+python accident_ui.py
+```
+
+Notification modes
+
+- Demo mode (default when credentials are missing): simulates SMS/calls and is safe for demos.
+- Live mode: enable real SMS/voice by providing Twilio credentials in `.env` and disabling demo mode in the dashboard.
+
+How the emergency workflow behaves
+
+1. System monitors for events in normal mode.
+2. Trigger an accident simulation from the dashboard.
+3. Alarm activates; a 30-second driver response timer starts.
 4. If the driver confirms safety, the workflow resets.
-5. If the timer expires, SMS alerts are sent to emergency contacts and responders.
-6. A 15-second acknowledgement timer starts.
-7. If no contact acknowledges, the system escalates to automatic voice calls.
+5. If the timer expires, SMS alerts are sent to configured emergency contacts.
+6. A 15-second acknowledgement timer begins for contacts to confirm receipt.
+7. If no acknowledgement is received, the system escalates to automated voice calls via Twilio.
 
-## GitHub Actions
+CI / Testing
 
-The repository includes a CI workflow that runs on every push and pull request. It:
+The repository includes a minimal GitHub Actions workflow that runs on push and pull requests. The workflow:
 
-- Sets up Python
-- Installs dependencies from `requirements.txt`
-- Checks Python syntax with `compileall`
+- Installs Python and dependencies
+- Runs a syntax check (compileall)
 - Imports the main modules as a smoke test
 
-This keeps the project lightweight while still catching broken imports and syntax errors before changes are merged.
+This keeps the CI fast while catching syntax errors and broken imports.
 
-## Safety Notes
+Security & safety notes
 
-- Do not commit real Twilio credentials.
-- Verify all emergency phone numbers before disabling demo mode.
-- Twilio trial accounts can only contact verified destination numbers.
-- This project is a demonstration system and should be tested thoroughly before any real-world emergency use.
+- Never commit real Twilio credentials, API keys, or private data to the repository.
+- Verify recipient phone numbers and test with demo mode before enabling live notifications.
+- This project is a demonstration system only — do not rely on it for real emergency handling without extensive testing, validation, and appropriate infrastructure.
 
-## License
+Contributing
 
-Add your preferred license before distributing this project publicly.
+Contributions, bug reports, and improvements are welcome. Please open issues or pull requests and describe the change and reasoning. For larger changes, open an issue first to discuss the approach.
+
+License
+
+Add your preferred license to the repository before redistributing or publishing this project publicly.
