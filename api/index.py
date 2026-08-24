@@ -10,29 +10,28 @@ from web_dashboard import DashboardRequestHandler, TEMPLATES_DIR, STATIC_DIR, CO
 
 class handler(DashboardRequestHandler):
     def _normalize_path(self) -> str:
-        # Check headers passed by Vercel for original path
-        for header_key in ("x-forwarded-uri", "x-matched-path", "x-original-uri", "x-invoke-path"):
+        for header_key in ("x-forwarded-uri", "x-vercel-sc-path", "x-invoke-path", "x-original-uri"):
             val = self.headers.get(header_key)
             if val:
-                path = unquote(urlparse(val).path)
-                if path and not path.startswith("/api/index.py"):
-                    return path
+                p = unquote(urlparse(val).path)
+                if p and not p.startswith("/api/index.py"):
+                    return p
 
         parsed = urlparse(self.path)
-        path = unquote(parsed.path)
+        p = unquote(parsed.path)
 
-        if path.startswith("/api/index.py"):
-            path = path[len("/api/index.py"):]
-            if not path:
-                path = "/"
+        if p == "/api/index.py" or p == "/api/index.py/":
+            return "/"
+        if p.startswith("/api/index.py/"):
+            return p[len("/api/index.py"):]
 
-        return path
+        return p or "/"
 
     def do_GET(self) -> None:
         norm_path = self._normalize_path()
         self.path = norm_path
 
-        if norm_path == "/":
+        if norm_path == "/" or norm_path == "":
             self._send_file(TEMPLATES_DIR / "index.html", "text/html; charset=utf-8")
             return
         if norm_path == "/service-bay":
@@ -47,7 +46,7 @@ class handler(DashboardRequestHandler):
         if norm_path.startswith("/static/"):
             relative = norm_path.removeprefix("/static/")
             target = (STATIC_DIR / relative).resolve()
-            if STATIC_DIR.resolve() in target.parents or target.parent == STATIC_DIR.resolve():
+            if target.exists() and target.is_file():
                 self._send_file(target)
                 return
 
