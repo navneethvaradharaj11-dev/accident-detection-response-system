@@ -2,10 +2,13 @@
 
 This is a zero-install web dashboard for the accident detection and emergency escalation demo.
 
-## Run
+## Live Hosted Dashboard
+
+🌐 **Vercel Link**: [https://accident-detection-response-system.vercel.app](https://accident-detection-response-system.vercel.app)
+
+## Local Run
 
 ```powershell
-cd "E:\Downloads\P1\Accident project"
 python web_dashboard.py
 ```
 

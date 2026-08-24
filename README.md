@@ -47,9 +47,14 @@ Install the Python dependency:
 pip install -r requirements.txt
 ```
 
+## Live Demo (Vercel)
+
+Access the live cloud-hosted dashboard at:
+[https://accident-detection-response-system.vercel.app](https://accident-detection-response-system.vercel.app)
+
 ## Quick Start
 
-Run the web dashboard:
+Run the web dashboard locally:
 
 ```powershell
 python web_dashboard.py
@@ -60,6 +65,7 @@ Open the dashboard in your browser:
 ```text
 http://127.0.0.1:8080
 ```
+Or view online at [https://accident-detection-response-system.vercel.app](https://accident-detection-response-system.vercel.app)
 
 To prevent the app from opening a browser automatically:
 
